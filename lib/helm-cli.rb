@@ -80,6 +80,18 @@ class HelmCLI
     end
   end
 
+  def uninstall_chart(chart, namespace: 'default')
+    cmd = base_cmd + ['uninstall', chart]
+    cmd += ['-n', namespace]
+
+    systemm(cmd)
+
+    unless last_status.success?
+      raise InstallError, "could not install chart '#{release}': helm "\
+        "exited with status code #{last_status.exitstatus}"
+    end
+  end
+
   def with_pipes(out = STDOUT, err = STDERR)
     previous_stdout = self.stdout
     previous_stderr = self.stderr
