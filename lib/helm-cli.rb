@@ -50,6 +50,7 @@ class HelmCLI
     cmd = base_cmd + ['install', release, chart]
     cmd += ['--version', version]
     cmd += ['-n', namespace]
+    cmd += ['--wait']
 
     params.each_pair do |key, value|
       cmd += ['--set', "#{key}=#{value}"]
@@ -82,12 +83,13 @@ class HelmCLI
 
   def uninstall_chart(chart, namespace: 'default')
     cmd = base_cmd + ['uninstall', chart]
-    cmd += ['-n', namespace]
+    cmd += ['--namespace', namespace]
+    cmd += ['--wait']
 
     systemm(cmd)
 
     unless last_status.success?
-      raise InstallError, "could not install chart '#{release}': helm "\
+      raise InstallError, "could not uninstall chart '#{chart}': helm "\
         "exited with status code #{last_status.exitstatus}"
     end
   end
