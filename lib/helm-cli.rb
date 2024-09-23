@@ -53,7 +53,7 @@ class HelmCLI
     cmd += ['--wait']
 
     params.each_pair do |key, value|
-      cmd += ['--set', "#{key}=#{value}"]
+      cmd += ['--set', "'#{key}=#{value}'"]
     end
 
     systemm(cmd)
