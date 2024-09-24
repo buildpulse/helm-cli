@@ -84,7 +84,6 @@ class HelmCLI
   def uninstall_chart(chart, namespace: 'default')
     cmd = base_cmd + ['uninstall', chart]
     cmd += ['--namespace', namespace]
-    cmd += ['--wait']
 
     systemm(cmd)
 
